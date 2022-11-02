@@ -117,6 +117,7 @@ const AddPost = () => {
                   placeholder="Enter Description"
                   className="form-control"
                   rows="8"
+                  maxLength={1000}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
