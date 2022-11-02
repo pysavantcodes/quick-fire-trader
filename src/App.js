@@ -34,7 +34,7 @@ const App = () => {
         if (!isLoggedIn) dispatch({ type: "SET_USER", payload: user });
         if (window.location.pathname === "/")
        
-          history.push("/home");
+          history.push("/");
         history.push(window.location.pathname);
        
       } else {

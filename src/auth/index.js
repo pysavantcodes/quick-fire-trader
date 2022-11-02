@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Switch, Route, useHistory, useRouteMatch, Navigate } from "react-router-dom";
-
+import { createUserDocument } from "../config/fire";
 
 import Login from "./Login";
 import fire from "../config/fire";
@@ -51,8 +51,8 @@ const Auth = () => {
   };
 
   // register user
-  const registerUser = ({ name, email, password, confirmPassword }) => {
-    if (!name || !email || !password || !confirmPassword) {
+  const registerUser = ({ name, email, password, confirmPassword, country }) => {
+    if (!name || !email || !password || !confirmPassword || !country) {
       return toast.warning("Please fill in all fields!!");
     }
 
@@ -66,11 +66,26 @@ const Auth = () => {
       .then((user) => {
         const currentUser = fire.auth().currentUser;
         toast.success("Successfully Created Account");
-        history.push("/")
+        fire.firestore().collection("users").doc(email).set({
+          name,
+          email,
+          country,
+          walletBalance: 0,
+          createdAt: Date(),
+        }).then((docRef)=>{
+          const docId = docRef.id;
+          console.log(docId);
+        })
+        .catch((err)=>{
+          console.log("Error:", err);
+        })
+       
+        history.push("/home")
         console.log("done")
         currentUser.updateProfile({
           displayName: name,
         });
+        
         dispatch({ type: "SET_USER", payload: currentUser });
         
       })

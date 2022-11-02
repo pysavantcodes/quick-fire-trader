@@ -65,6 +65,7 @@ const Admin = () => {
         currentUser.updateProfile({
           displayName: name,
         });
+        
         dispatch({ type: "SET_USER", payload: currentUser });
         history.push("/admin/dashboard");
       })

@@ -3,6 +3,7 @@ import "firebase/database";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import { useRef } from "react";
 
 // const firebaseConfig = {
 //     apiKey: process.env.React_App_ApiKey,
@@ -25,3 +26,26 @@ const firebaseConfig = {
 const fire = firebase.initializeApp(firebaseConfig);
 
 export default fire;
+
+export const createUserDocument = async(user, additionalData) => {
+    if (!user) return;
+    const userRef = fire.firestore().doc(`users/${user.uid}`)
+
+    const snapshot = await userRef.get()
+
+    if (!snapshot.exists) {
+        const { email } = user;
+        const { displayName } = additionalData;
+
+        try {
+            userRef.set({
+                displayName,
+                email,
+                createdAt: new Date()
+            })
+            console.log("Created");
+        } catch (error) {
+            console.log("Unable to create user", error);
+        }
+    }
+}

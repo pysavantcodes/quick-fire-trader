@@ -12,9 +12,12 @@ const Register = ({ registerUser }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState("Afghanistan");
   const [loading, setLoading] = useState(false);
   const [loadingCountries, setLoadingCountries] = useState(false);
   const history = useHistory();
+
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +26,7 @@ const Register = ({ registerUser }) => {
       return toast.warning("Please fill in all fields!!");
     } else {
       setLoading(true);
-      registerUser({ name, email, password, confirmPassword });
+      registerUser({ name, email, password, confirmPassword, country });
       history.push("/auth/login");
     }
   };
@@ -78,12 +81,13 @@ const Register = ({ registerUser }) => {
               {loadingCountries ? (
                 <p>Loading Countries...</p>
               ) : (
-                <select name="country" style={{ marginBottom: "1rem" }}>
+                <select onChange={(e)=>setCountry(e.target.value)} name="country" style={{ marginBottom: "1rem" }}>
                   {countries.map((country) => {
                     return (
                       <option
                         key={country.name.common}
                         value={country.name.common}
+                        
                       >
                         {country.name.common}
                       </option>

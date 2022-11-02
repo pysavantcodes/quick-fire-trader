@@ -37,6 +37,7 @@ const AddPost = () => {
     if (description.length < 100) {
       return toast.info("Description should be of atleast 100");
     }
+    
     if (title.trim().split(" ").length < 2) {
       return toast.info("Title should be of atleast 2 words");
     }
@@ -117,8 +118,8 @@ const AddPost = () => {
                   placeholder="Enter Description"
                   className="form-control"
                   rows="8"
-                  maxLength={1000}
                   value={description}
+                  maxLength={1000}
                   onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
               </div>
