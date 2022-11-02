@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins";
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+h5 {
+    margin-bottom: 0;
+}
+
+a:active {
+    outline: none;
+    box-shadow: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+a:focus {
+    outline: none;
+    box-shadow: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+button,
+a,
+li {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.container {
+    margin-top: 6rem;
+    margin-bottom: 5rem;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.container-fluid {
+    margin-top: 11rem;
+}
+
+.input-group {
+    padding: .7rem;
+    outline: none;
+    border: none;
+    background: rgba(255, 255, 255, 0.171);
+    color: white;
+    display: none;
+}
+
+.navi li {
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    padding: 1px .5rem;
+}
+
+.navi a.active>#ic {
+    opacity: 0.4;
+}
+
+.navi a.active>p {
+    opacity: 0.4;
+}
+
+.navi li:active {
+    background-color: white;
+    color: black;
+}
+
+.navi li p {
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.splash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    z-index: 99999999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+}
+
+.splash p {
+    font-weight: 700;
+    font-size: 25px;
+    color: white;
+}
+
+.div {
+    animation: glitch 1s linear infinite;
+}
+
+.modal-bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99999999999999999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.mod p {
+    margin-bottom: 0;
+}
+
+.modal-bg .mod {
+    min-width: 350px;
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.mod .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mod .donate {
+    display: flex;
+    align-items: center;
+    padding: .5rem 0;
+}
+
+.mod .donate p {
+    width: 30%;
+    text-align: center;
+    background: rgb(180, 180, 180);
+    margin-right: .5rem;
+    padding: .45rem 0;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.mod .head .info {
+    display: flex;
+    align-items: center;
+}
+
+.mod h4 {
+    font-size: 14px;
+    margin-top: .7rem;
+}
+
+.mod .head .img {
+    width: 35px;
+    height: 35px;
+    background: rgb(184, 184, 184);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: .7rem;
+}
+
+.mod .connect {
+    text-align: center;
+    padding: .5rem 0;
+}
+
+.mod .connect p {
+    font-size: 14px;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.signal .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(66, 66, 66, 0.445);
+    padding-bottom: .7rem;
+}
+
+.signal {
+    margin-bottom: 1rem;
+    padding: .7rem;
+}
+
+.signal .values {
+    margin-top: .7rem;
+}
+
+select {
+    width: 100%;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+    outline: none;
+    border: 1px solid rgb(190, 190, 190);
+}
+
+.buy {
+    background: rgb(0, 202, 0);
+    color: white;
+    padding: 1px 6px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+.values {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.values li {
+    list-style: none;
+    margin-bottom: .4rem;
+}
+
+.sell {
+    background: rgb(255, 0, 0);
+    color: white;
+    padding: 1px 6px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+.head-row {
+    display: flex;
+    width: 100%;
+    overflow-x: scroll;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+}
+
+.head-row div {
+    text-align: center;
+    margin-right: 1.5rem;
+}
+
+.head-row div p {
+    font-size: 13px;
+}
+
+.box p:nth-child(1) {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.box p:nth-child(2) {
+    font-size: 13px;
+}
