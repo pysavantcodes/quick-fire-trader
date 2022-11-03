@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import fire from "../../config/fire";
 import GooglePayButton from "@google-pay/button-react";
+import OpenApp from "react-open-app"
 
 const Modal = ({ show, name, email, wallet }) => {
   window.onclick = (e) => {
@@ -109,6 +110,7 @@ const Modal = ({ show, name, email, wallet }) => {
         <div className="connect">
           <p>Connect to us Via</p>
           <div>
+            <OpenApp href="https://www.facebook.com/profile.php?id=100087641640766">
             <FiFacebook
               style={{
                 color: "#202646",
@@ -119,6 +121,9 @@ const Modal = ({ show, name, email, wallet }) => {
                 borderRadius: "50%",
               }}
             />
+            </OpenApp>
+            
+            <a href="https://t.me/+v8SGq97FkEk4YzRk">
             <FiSend
               style={{
                 color: "#202646",
@@ -129,6 +134,8 @@ const Modal = ({ show, name, email, wallet }) => {
                 borderRadius: "50%",
               }}
             />
+            </a>
+            <a href="https://youtube.com/channel/UCzfOnYvMTT3roPXZ7JfZpZA">
             <FiYoutube
               style={{
                 color: "#202646",
@@ -139,6 +146,7 @@ const Modal = ({ show, name, email, wallet }) => {
                 borderRadius: "50%",
               }}
             />
+            </a>
             <FaGoogle
               style={{
                 color: "#202646",
