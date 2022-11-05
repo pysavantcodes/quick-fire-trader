@@ -35,7 +35,7 @@ const Home = () => {
       <h5>Hello, {user == null ? "user" : user.displayName}</h5>
       <div className="head-row">
         <div>
-          <WhatsappShareButton url="https://wa.me/+254719832751/">
+          <a href="https://wa.me/+254719832751/">
             <FaWhatsapp
               style={{
                 color: "#202646",
@@ -46,7 +46,7 @@ const Home = () => {
                 borderRadius: "50%",
               }}
             />
-          </WhatsappShareButton>
+          </a>
           <p>Whatsapp</p>
         </div>
         <div className="sub">
@@ -78,7 +78,7 @@ const Home = () => {
           <p>Rate</p>
         </div>
         <div className="telegram">
-          <TelegramShareButton url="tg://join?invite=v8SGq97FkEk4YzRk/">
+          <a href="https://t.me/+v8SGq97FkEk4YzRk">
             <FiSend
               style={{
                 color: "#202646",
@@ -89,11 +89,11 @@ const Home = () => {
                 borderRadius: "50%",
               }}
             />
-          </TelegramShareButton>
+          </a>
           <p>Telegram</p>
         </div>
         <div className="facebook">
-          <FacebookShareButton url="https://www.facebook.com/profile.php?id=100087641640766">
+          <a href="https://www.facebook.com/profile.php?id=100087641640766">
             <FiFacebook
               style={{
                 color: "#202646",
@@ -104,7 +104,7 @@ const Home = () => {
                 borderRadius: "50%",
               }}
             />
-          </FacebookShareButton>
+          </a>
           <p>Facebook</p>
         </div>
 
@@ -136,10 +136,10 @@ const Home = () => {
         </p>
       </div>
       <div className="d-flex" style={{ marginTop: "15px" }}>
-        <WhatsappShareButton
+        <a
           style={{textAlign:"left", marginRight: "15px" }}
           className="box w-50"
-          url="https://wa.me/+254719832751/"
+          href="https://wa.me/+254719832751/"
         >
           <div className="card p-3">
             <p>
@@ -157,8 +157,8 @@ const Home = () => {
             />
             <p style={{ fontSize: "13px" }}>Brian Ongiri</p>
           </div>
-        </WhatsappShareButton>
-        <TelegramShareButton className=" w-50" url="tg://join?invite=v8SGq97FkEk4YzRk/">
+        </a>
+        <a className=" w-50" url="https://t.me/+v8SGq97FkEk4YzRk/">
           <div className="card box p-3">
             <p>
               <b>Chatroom</b>
@@ -168,7 +168,7 @@ const Home = () => {
               with others
             </p>
           </div>
-        </TelegramShareButton>
+        </a>
       </div>
       
       <div className="card mt-3 p-3">

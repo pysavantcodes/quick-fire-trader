@@ -153,7 +153,7 @@ const Register = ({ registerUser }) => {
                   className="connect"
                 >
                   <p>Failed to Register? Contact us now...</p>
-                  <TelegramShareButton url="tg://join?invite=v8SGq97FkEk4YzRk/">
+                  <a href="https://t.me/+v8SGq97FkEk4YzRk">
                     <FiSend
                       style={{
                         color: "#202646",
@@ -164,8 +164,8 @@ const Register = ({ registerUser }) => {
                         borderRadius: "50%",
                       }}
                     />
-                  </TelegramShareButton>
-                  <EmailShareButton url="https://quickfiretraders@gmail.com/">
+                  </a>
+                  <a href="https://quickfiretraders@gmail.com/">
                     <FaGoogle
                       style={{
                         color: "#202646",
@@ -176,8 +176,8 @@ const Register = ({ registerUser }) => {
                         borderRadius: "50%",
                       }}
                     />
-                  </EmailShareButton>
-                  <WhatsappShareButton url="https://wa.me/+254719832751/">
+                  </a>
+                  <a href="https://wa.me/+254719832751/">
                     <FaWhatsapp
                       style={{
                         color: "#202646",
@@ -188,7 +188,7 @@ const Register = ({ registerUser }) => {
                         borderRadius: "50%",
                       }}
                     />
-                  </WhatsappShareButton>
+                  </a> 
                 </div>
               </div>
             </form>
