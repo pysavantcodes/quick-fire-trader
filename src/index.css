@@ -268,3 +268,32 @@ select {
 .box p:nth-child(2) {
     font-size: 13px;
 }
+
+.btn-black {
+    color: white;
+    background-color: black;
+    border: none;
+    outline: none;
+}
+
+.btn-black:hover {
+    background-color: black;
+    color: white;
+    border: none;
+    outline: none;
+}
+
+.btn-primary {
+    background-color: #202649;
+    border: #202649;
+}
+
+.btn-primary:hover {
+    background-color: rgba(73, 85, 151, 0.549);
+    border: none;
+}
+
+.btn-primary:checked {
+    background-color: rgba(73, 85, 151, 0.549);
+    border: none;
+}

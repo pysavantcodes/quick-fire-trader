@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FiSend } from "react-icons/fi";
-import { FaGoogle } from "react-icons/fa";
+import { FaGoogle, FaWhatsapp } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -24,6 +24,9 @@ const Register = ({ registerUser }) => {
 
     if (!name || !email || !password || !confirmPassword) {
       return toast.warning("Please fill in all fields!!");
+
+    } else if(password !==confirmPassword){
+      return toast.warning("Passwords do not match!!");
     } else {
       setLoading(true);
       registerUser({ name, email, password, confirmPassword, country });
@@ -149,26 +152,42 @@ const Register = ({ registerUser }) => {
                   className="connect"
                 >
                   <p>Failed to Register? Contact us now...</p>
-                  <FiSend
-                    style={{
-                      color: "#202646",
-                      fontSize: "50px",
-                      padding: ".7rem",
-                      background: "rgba(184, 184, 184, 0.7)",
-                      margin: ".7rem",
-                      borderRadius: "50%",
-                    }}
-                  />
-                  <FaGoogle
-                    style={{
-                      color: "#202646",
-                      fontSize: "50px",
-                      padding: ".7rem",
-                      background: "rgba(184, 184, 184, 0.7)",
-                      margin: ".7rem",
-                      borderRadius: "50%",
-                    }}
-                  />
+                  <a href="https://t.me/+v8SGq97FkEk4YzRk">
+                    <FiSend
+                      style={{
+                        color: "#202646",
+                        fontSize: "50px",
+                        padding: ".7rem",
+                        background: "rgba(184, 184, 184, 0.7)",
+                        margin: ".7rem",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </a>
+                  <a href="https://wa.me/+254719832751/">
+                    <FaGoogle
+                      style={{
+                        color: "#202646",
+                        fontSize: "50px",
+                        padding: ".7rem",
+                        background: "rgba(184, 184, 184, 0.7)",
+                        margin: ".7rem",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </a>
+                  <a href="https://wa.me/+254719832751/">
+                    <FaWhatsapp
+                      style={{
+                        color: "#202646",
+                        fontSize: "50px",
+                        padding: ".7rem",
+                        background: "rgba(184, 184, 184, 0.7)",
+
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </a>
                 </div>
               </div>
             </form>

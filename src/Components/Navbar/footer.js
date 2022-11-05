@@ -31,6 +31,7 @@ const Footer = () => {
 
   return (
     <nav className="navi" style={navStyle}>
+      
     
       <input className="input-group" type="search" placeholder="Search...Jobs, Current Affairs, Results" />
       <ul style={ul}>

@@ -3,13 +3,12 @@ import { FiUser } from "react-icons/fi";
 import { FiFacebook } from "react-icons/fi";
 import { FiSend } from "react-icons/fi";
 import { FiYoutube } from "react-icons/fi";
-import { FaGoogle } from "react-icons/fa";
+import { FaGoogle, FaWhatsapp } from "react-icons/fa";
 import { Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import fire from "../../config/fire";
 import GooglePayButton from "@google-pay/button-react";
-import OpenApp from "react-open-app"
 
 const Modal = ({ show, name, email, wallet }) => {
   window.onclick = (e) => {
@@ -60,103 +59,81 @@ const Modal = ({ show, name, email, wallet }) => {
         </h4>
         <div className="donate">
           <p>$2</p>
-          {/* <button className="btn btn-primary w-100">Donate</button> */}
-          <GooglePayButton
-          
-            environment="TEST"
-            paymentRequest={{
-              apiVersion: 2,
-              apiVersionMinor: 0,
-              allowedPaymentMethods: [
-                {
-                  type: "CARD",
-                  parameters: {
-                    allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-                    allowedCardNetworks: ["MASTERCARD", "VISA"],
-                  },
-                  tokenizationSpecification: {
-                    type: "PAYMENT_GATEWAY",
-                    parameters: {
-                      gateway: "example",
-                      gatewayMerchantId: "exampleGatewayMerchantId",
-                    },
-                  },
-                },
-              ],
-              merchantInfo: {
-                merchantId: "12345678901234567890",
-                merchantName: "Demo Merchant",
-              },
-              transactionInfo: {
-                totalPriceStatus: "FINAL",
-                totalPriceLabel: "Total",
-                totalPrice: "2",
-                currencyCode: "USD",
-                countryCode: "US",
-              },
-            }}
-            onLoadPaymentData={(paymentRequest) => {
-              console.log("load payment data", paymentRequest);
-            }}
-            // onPaymentAuthorized={(paymentData)=>{
-            //   console.log(paymentData);
-            //   return {transactionState: "SUCCESS"}
-            // }}
-            buttonColor="black"
-            buttonType="donate"
-          />
+          <button className="btn btn-black w-100">Donate</button>
         </div>
-        <button className="btn btn-primary w-100">Share app</button>
+        <button className="btn btn-primary mb-2 w-100">
+          &#x1F4B8; Fund Account
+        </button>
+        <button
+          style={{ columnGap: "10px" }}
+          className="btn btn-primary d-flex mx-auto justify-content-between align-items-center my-2"
+        >
+          <p>Share App</p>
+          <i className="fa fa-share"></i>
+        </button>
         <div className="connect">
           <p>Connect to us Via</p>
-          <div>
-            <OpenApp href="https://www.facebook.com/profile.php?id=100087641640766">
-            <FiFacebook
-              style={{
-                color: "#202646",
-                fontSize: "50px",
-                padding: ".7rem",
-                background: "rgba(184, 184, 184, 0.7)",
-                margin: ".7rem",
-                borderRadius: "50%",
-              }}
-            />
-            </OpenApp>
-            
+          <div className="mb-1">
+            <a href="https://www.facebook.com/profile.php?id=100087641640766">
+              <FiFacebook id="ic"
+                style={{
+                  color: "#202646",
+                  fontSize: "45px",
+                  padding: ".7rem",
+                  background: "rgba(184, 184, 184, 0.7)",
+                  margin: ".7rem",
+                  borderRadius: "50%",
+                }}
+              />
+            </a>
             <a href="https://t.me/+v8SGq97FkEk4YzRk">
-            <FiSend
-              style={{
-                color: "#202646",
-                fontSize: "50px",
-                padding: ".7rem",
-                background: "rgba(184, 184, 184, 0.7)",
-                margin: ".7rem",
-                borderRadius: "50%",
-              }}
-            />
+              <FiSend id="ic"
+                style={{
+                  color: "#202646",
+                  fontSize: "45px",
+                  padding: ".7rem",
+                  background: "rgba(184, 184, 184, 0.7)",
+                  margin: ".7rem",
+                  borderRadius: "50%",
+                }}
+              />
             </a>
             <a href="https://youtube.com/channel/UCzfOnYvMTT3roPXZ7JfZpZA">
-            <FiYoutube
-              style={{
-                color: "#202646",
-                fontSize: "50px",
-                padding: ".7rem",
-                background: "rgba(184, 184, 184, 0.7)",
-                margin: ".7rem",
-                borderRadius: "50%",
-              }}
-            />
+              <FiYoutube id="ic"
+                style={{
+                  color: "#202646",
+                  fontSize: "45px",
+                  padding: ".7rem",
+                  background: "rgba(184, 184, 184, 0.7)",
+                  margin: ".7rem",
+                  borderRadius: "50%",
+                }}
+              />
             </a>
-            <FaGoogle
-              style={{
-                color: "#202646",
-                fontSize: "50px",
-                padding: ".7rem",
-                background: "rgba(184, 184, 184, 0.7)",
-                margin: ".7rem",
-                borderRadius: "50%",
-              }}
-            />
+            <a href="https://quickfiretraders@gmail.com">
+              <FaGoogle id="ic"
+                style={{
+                  color: "#202646",
+                  fontSize: "45px",
+                  padding: ".7rem",
+                  background: "rgba(184, 184, 184, 0.7)",
+                  margin: ".7rem",
+                  borderRadius: "50%",
+                }}
+              />
+            </a>
+            <a href="https://wa.me/+254719832751/">
+              <FaWhatsapp id="ic"
+                style={{
+                  color: "#202646",
+                  fontSize: "45px",
+                  padding: ".7rem",
+                  background: "rgba(184, 184, 184, 0.7)",
+                  margin: ".7rem",
+                  borderRadius: "50%",
+                }}
+              />
+            </a>
           </div>
         </div>
         <button onClick={() => logoutUser()} className="btn btn-primary w-100">

@@ -12,6 +12,9 @@ const Navbar = () => {
   const db = fire.firestore();
 
   const userCheck = useSelector((state) => state.auth.user);
+ 
+  const changePage = window.location.href;
+  
   useEffect(() => {
     if(userCheck == null){
 
@@ -25,8 +28,9 @@ const Navbar = () => {
         }
       });
     }
+   
     
-  }, []);
+  }, [changePage]);
 
   
 

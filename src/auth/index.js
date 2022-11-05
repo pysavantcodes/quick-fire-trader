@@ -20,7 +20,7 @@ const Auth = () => {
         if (!isLoggedIn) dispatch({ type: "SET_USER", payload: user });
         if (window.location.pathname === "/auth")
        
-          history.push("/");
+          history.push("/home");
         history.push(window.location.pathname);
        
       } else {
@@ -30,8 +30,10 @@ const Auth = () => {
     });
   }, [dispatch]);
 
+  
   // login user
   const loginUser = (email, password) => {
+   
     fire
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -42,10 +44,14 @@ const Auth = () => {
       })
       .catch((err) => {
         if (err.code === "auth/user-not-found") {
+        
           return toast.error("Invalid Email or Password");
+          
         }
         if (err.code === "auth/invalid-email") {
+ 
           return toast.error("Please enter valid email");
+          
         }
       });
   };
@@ -99,7 +105,7 @@ const Auth = () => {
   return (
     <Switch>
       <Route path={`${path}/login`}>
-        <Login loginUser={loginUser} />
+        <Login loginUser={loginUser}/>
       </Route>
       <Route path={`${path}/register`}>
         <Register registerUser={registerUser} />

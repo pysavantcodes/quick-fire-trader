@@ -11,34 +11,39 @@ import {
   FiDollarSign,
   FiHelpCircle,
   FiUser,
+
 } from "react-icons/fi";
+
+import { FaWhatsapp } from "react-icons/fa";
 
 const Home = () => {
   const user = useSelector((state) => state.auth.user);
-  
+
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    dispatch(getPosts())
-
-  },[])
+  useEffect(() => {
+    dispatch(getPosts());
+  }, []);
 
   return (
     <div className="container">
       <h5>Hello, {user == null ? "user" : user.displayName}</h5>
       <div className="head-row">
-        <div className="help">
-          <FiHelpCircle
-            style={{
-              color: "#202646",
-              fontSize: "50px",
-              padding: ".7rem",
-              background: "rgba(184, 184, 184, 0.7)",
-
-              borderRadius: "50%",
-            }}
-          />
-          <p>Help</p>
+        <div>
+          <a href="https://wa.me/+254719832751/">
+            <FaWhatsapp
+           
+              style={{
+                color: "#202646",
+                fontSize: "50px",
+                padding: ".7rem",
+                background: "rgba(184, 184, 184, 0.7)",
+              
+                borderRadius: "50%",
+              }}
+            />
+          </a>
+          <p>Whatsapp</p>
         </div>
         <div className="sub">
           <FiDollarSign
@@ -54,6 +59,7 @@ const Home = () => {
           <p>Subscribe</p>
         </div>
         <div className="rate">
+          <a href="#0">
           <FiStar
             style={{
               color: "#202646",
@@ -64,9 +70,11 @@ const Home = () => {
               borderRadius: "50%",
             }}
           />
+          </a>
           <p>Rate</p>
         </div>
         <div className="telegram">
+          <a href="https://t.me/+v8SGq97FkEk4YzRk">
           <FiSend
             style={{
               color: "#202646",
@@ -77,9 +85,11 @@ const Home = () => {
               borderRadius: "50%",
             }}
           />
+          </a>
           <p>Telegram</p>
         </div>
         <div className="facebook">
+          <a href="https://www.facebook.com/profile.php?id=100087641640766">
           <FiFacebook
             style={{
               color: "#202646",
@@ -90,22 +100,12 @@ const Home = () => {
               borderRadius: "50%",
             }}
           />
+          </a>
           <p>Facebook</p>
         </div>
-        <div className="team">
-          <FiGlobe
-            style={{
-              color: "#202646",
-              fontSize: "50px",
-              padding: ".7rem",
-              background: "rgba(184, 184, 184, 0.7)",
-
-              borderRadius: "50%",
-            }}
-          />
-          <p>Team</p>
-        </div>
+     
         <div className="youtube">
+          <a href="https://youtube.com/channel/UCzfOnYvMTT3roPXZ7JfZpZA">
           <FiYoutube
             style={{
               color: "#202646",
@@ -116,6 +116,7 @@ const Home = () => {
               borderRadius: "50%",
             }}
           />
+          </a>
           <p>Youtube</p>
         </div>
       </div>
@@ -124,13 +125,15 @@ const Home = () => {
           <b>QuickFireTraders Admin</b>
         </p>
         <p>
-          Welcome to Trading signals. We bring you the bes and most popular
-          trading signals in th industry. Feel free to subscribe to our services
-          any date directly in the app of contact us via our social platforms.
+          Welcome to Quick Fire Traders Trading signals. We bring you the best
+          and most popular trading signals in th industry. Feel free to
+          subscribe to our services any date directly in the app of contact us
+          via our social platforms.
         </p>
       </div>
-      <div className="d-flex" style={{marginTop:"15px"}}>
-        <div className="card box p-3 w-50" style={{marginRight:"15px"}}>
+      <div className="d-flex" style={{ marginTop: "15px" }}>
+        <a style={{ marginRight: "15px" }} className="card box p-3 w-50" href="https://wa.me/+254719832751/">
+        <div>
           <p>
             <b>Account Managers</b>
           </p>
@@ -140,17 +143,29 @@ const Home = () => {
               fontSize: "40px",
               padding: ".7rem",
               background: "rgba(184, 184, 184, 0.7)",
-              marginBottom:"5px",
+              marginBottom: "10px",
               borderRadius: "50%",
             }}
           />
-          <p style={{fontSize:"13px"}}>Admin name</p>
+          <p style={{ fontSize: "13px" }}>Brian Ongiri</p>
         </div>
-        <div className="card box p-3 w-50">
-          <p>
-            <b>Chatroom</b>
-          </p>
-          <p>Join the public Telegram group to interact and share knowledge with others</p>
+        </a>
+        <a className=" w-50" href="https://t.me/+v8SGq97FkEk4YzRk">
+          <div className="card box p-3">
+            <p>
+              <b>Chatroom</b>
+            </p>
+            <p>
+              Join the public Telegram group to interact and share knowledge
+              with others
+            </p>
+          </div>
+        </a>
+      </div>
+      <div className="card mt-3 p-3">
+        <p><b>Advert</b></p>
+        <div className="ads">
+        <div id="container-1261e9e73efbf5a14f0b266c74ab6ca4"></div>
         </div>
       </div>
     </div>
