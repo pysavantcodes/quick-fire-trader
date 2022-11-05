@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import fire from "../../config/fire";
 import GooglePayButton from "@google-pay/button-react";
+import { EmailShareButton, FacebookShareButton, TelegramShareButton, WhatsappShareButton } from "react-share";
 
 const Modal = ({ show, name, email, wallet }) => {
   window.onclick = (e) => {
@@ -74,7 +75,7 @@ const Modal = ({ show, name, email, wallet }) => {
         <div className="connect">
           <p>Connect to us Via</p>
           <div className="mb-1">
-            <a href="https://www.facebook.com/profile.php?id=100087641640766">
+            <FacebookShareButton url="https://www.facebook.com/profile.php?id=100087641640766">
               <FiFacebook id="ic"
                 style={{
                   color: "#202646",
@@ -85,8 +86,8 @@ const Modal = ({ show, name, email, wallet }) => {
                   borderRadius: "50%",
                 }}
               />
-            </a>
-            <a href="https://t.me/+v8SGq97FkEk4YzRk">
+            </FacebookShareButton>
+            <TelegramShareButton url="tg://join?invite=v8SGq97FkEk4YzRk/">
               <FiSend id="ic"
                 style={{
                   color: "#202646",
@@ -97,7 +98,7 @@ const Modal = ({ show, name, email, wallet }) => {
                   borderRadius: "50%",
                 }}
               />
-            </a>
+            </TelegramShareButton>
             <a href="https://youtube.com/channel/UCzfOnYvMTT3roPXZ7JfZpZA">
               <FiYoutube id="ic"
                 style={{
@@ -110,7 +111,7 @@ const Modal = ({ show, name, email, wallet }) => {
                 }}
               />
             </a>
-            <a href="https://quickfiretraders@gmail.com">
+            <EmailShareButton url="https://quickfiretraders@gmail.com">
               <FaGoogle id="ic"
                 style={{
                   color: "#202646",
@@ -121,8 +122,8 @@ const Modal = ({ show, name, email, wallet }) => {
                   borderRadius: "50%",
                 }}
               />
-            </a>
-            <a href="https://wa.me/+254719832751/">
+            </EmailShareButton>
+            <WhatsappShareButton url="https://wa.me/+254719832751/">
               <FaWhatsapp id="ic"
                 style={{
                   color: "#202646",
@@ -133,7 +134,7 @@ const Modal = ({ show, name, email, wallet }) => {
                   borderRadius: "50%",
                 }}
               />
-            </a>
+            </WhatsappShareButton>
           </div>
         </div>
         <button onClick={() => logoutUser()} className="btn btn-primary w-100">

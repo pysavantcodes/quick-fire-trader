@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getPosts } from "../../redux/actionCreators/postsActionCreator";
-import {FacebookShareButton, WhatsappShareButton} from "react-share"
+import {FacebookShareButton, TelegramShareButton, WhatsappShareButton} from "react-share"
 import {
   FiFacebook,
   FiYoutube,
@@ -78,7 +78,7 @@ const Home = () => {
           <p>Rate</p>
         </div>
         <div className="telegram">
-          <a href="https://t.me/+v8SGq97FkEk4YzRk">
+          <TelegramShareButton url="tg://join?invite=v8SGq97FkEk4YzRk/">
             <FiSend
               style={{
                 color: "#202646",
@@ -89,7 +89,7 @@ const Home = () => {
                 borderRadius: "50%",
               }}
             />
-          </a>
+          </TelegramShareButton>
           <p>Telegram</p>
         </div>
         <div className="facebook">
@@ -136,12 +136,12 @@ const Home = () => {
         </p>
       </div>
       <div className="d-flex" style={{ marginTop: "15px" }}>
-        <a
-          style={{ marginRight: "15px" }}
-          className="card box p-3 w-50"
-          href="https://wa.me/+254719832751/"
+        <WhatsappShareButton
+          style={{textAlign:"left", marginRight: "15px" }}
+          className="box w-50"
+          url="https://wa.me/+254719832751/"
         >
-          <div>
+          <div className="card p-3">
             <p>
               <b>Account Managers</b>
             </p>
@@ -157,8 +157,8 @@ const Home = () => {
             />
             <p style={{ fontSize: "13px" }}>Brian Ongiri</p>
           </div>
-        </a>
-        <a className=" w-50" href="https://t.me/+v8SGq97FkEk4YzRk">
+        </WhatsappShareButton>
+        <TelegramShareButton className=" w-50" url="tg://join?invite=v8SGq97FkEk4YzRk/">
           <div className="card box p-3">
             <p>
               <b>Chatroom</b>
@@ -168,7 +168,7 @@ const Home = () => {
               with others
             </p>
           </div>
-        </a>
+        </TelegramShareButton>
       </div>
       
       <div className="card mt-3 p-3">

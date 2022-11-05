@@ -153,7 +153,7 @@ const Register = ({ registerUser }) => {
                   className="connect"
                 >
                   <p>Failed to Register? Contact us now...</p>
-                  <TelegramShareButton url="https://t.me/+v8SGq97FkEk4YzRk">
+                  <TelegramShareButton url="tg://join?invite=v8SGq97FkEk4YzRk/">
                     <FiSend
                       style={{
                         color: "#202646",
@@ -165,7 +165,7 @@ const Register = ({ registerUser }) => {
                       }}
                     />
                   </TelegramShareButton>
-                  <EmailShareButton url="https://wa.me/+254719832751/">
+                  <EmailShareButton url="https://quickfiretraders@gmail.com/">
                     <FaGoogle
                       style={{
                         color: "#202646",

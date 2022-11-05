@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { FiSend } from "react-icons/fi";
 import { FaGoogle, FaWhatsapp } from "react-icons/fa";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { EmailShareButton, TelegramShareButton, WhatsappShareButton } from "react-share";
 
 
 const Login = ({ loginUser }) => {
@@ -110,7 +111,7 @@ const Login = ({ loginUser }) => {
                   className="connect"
                 >
                   <p>Failed to Login? Contact us now...</p>
-                  <a href="https://t.me/+v8SGq97FkEk4YzRk">
+                  <TelegramShareButton url="tg://join?invite=v8SGq97FkEk4YzRk/">
                     <FiSend
                       style={{
                         color: "#202646",
@@ -121,8 +122,8 @@ const Login = ({ loginUser }) => {
                         borderRadius: "50%",
                       }}
                     />
-                  </a>
-                  <a href="https://wa.me/+254719832751/">
+                  </TelegramShareButton>
+                  <EmailShareButton url="https://quickfiretraders@gmail.com/">
                     <FaGoogle
                       style={{
                         color: "#202646",
@@ -133,8 +134,8 @@ const Login = ({ loginUser }) => {
                         borderRadius: "50%",
                       }}
                     />
-                  </a>
-                  <a href="https://wa.me/+254719832751/">
+                  </EmailShareButton>
+                  <WhatsappShareButton url="https://wa.me/+254719832751/">
                     <FaWhatsapp
                       style={{
                         color: "#202646",
@@ -145,7 +146,7 @@ const Login = ({ loginUser }) => {
                         borderRadius: "50%",
                       }}
                     />
-                  </a>
+                  </WhatsappShareButton>
                 </div>
               </div>
             </form>
