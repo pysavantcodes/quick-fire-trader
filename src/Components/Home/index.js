@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getPosts } from "../../redux/actionCreators/postsActionCreator";
+import {FacebookShareButton, WhatsappShareButton} from "react-share"
 import {
   FiFacebook,
   FiYoutube,
@@ -34,7 +35,7 @@ const Home = () => {
       <h5>Hello, {user == null ? "user" : user.displayName}</h5>
       <div className="head-row">
         <div>
-          <a href="https://wa.me/+254719832751/">
+          <WhatsappShareButton url="https://wa.me/+254719832751/">
             <FaWhatsapp
               style={{
                 color: "#202646",
@@ -45,7 +46,7 @@ const Home = () => {
                 borderRadius: "50%",
               }}
             />
-          </a>
+          </WhatsappShareButton>
           <p>Whatsapp</p>
         </div>
         <div className="sub">
@@ -92,7 +93,7 @@ const Home = () => {
           <p>Telegram</p>
         </div>
         <div className="facebook">
-          <a href="https://www.facebook.com/profile.php?id=100087641640766">
+          <FacebookShareButton url="https://www.facebook.com/profile.php?id=100087641640766">
             <FiFacebook
               style={{
                 color: "#202646",
@@ -103,7 +104,7 @@ const Home = () => {
                 borderRadius: "50%",
               }}
             />
-          </a>
+          </FacebookShareButton>
           <p>Facebook</p>
         </div>
 
@@ -169,6 +170,7 @@ const Home = () => {
           </div>
         </a>
       </div>
+      
       <div className="card mt-3 p-3">
         <p>
           <b>Advert</b>

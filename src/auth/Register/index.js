@@ -5,6 +5,7 @@ import { FiSend } from "react-icons/fi";
 import { FaGoogle, FaWhatsapp } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import { EmailShareButton, TelegramShareButton, WhatsappShareButton } from "react-share";
 
 const Register = ({ registerUser }) => {
   const [name, setName] = useState("");
@@ -152,7 +153,7 @@ const Register = ({ registerUser }) => {
                   className="connect"
                 >
                   <p>Failed to Register? Contact us now...</p>
-                  <a href="https://t.me/+v8SGq97FkEk4YzRk">
+                  <TelegramShareButton url="https://t.me/+v8SGq97FkEk4YzRk">
                     <FiSend
                       style={{
                         color: "#202646",
@@ -163,8 +164,8 @@ const Register = ({ registerUser }) => {
                         borderRadius: "50%",
                       }}
                     />
-                  </a>
-                  <a href="https://wa.me/+254719832751/">
+                  </TelegramShareButton>
+                  <EmailShareButton url="https://wa.me/+254719832751/">
                     <FaGoogle
                       style={{
                         color: "#202646",
@@ -175,19 +176,19 @@ const Register = ({ registerUser }) => {
                         borderRadius: "50%",
                       }}
                     />
-                  </a>
-                  <a href="https://wa.me/+254719832751/">
+                  </EmailShareButton>
+                  <WhatsappShareButton url="https://wa.me/+254719832751/">
                     <FaWhatsapp
                       style={{
                         color: "#202646",
                         fontSize: "50px",
                         padding: ".7rem",
                         background: "rgba(184, 184, 184, 0.7)",
-
+                        margin: ".7rem",
                         borderRadius: "50%",
                       }}
                     />
-                  </a>
+                  </WhatsappShareButton>
                 </div>
               </div>
             </form>
