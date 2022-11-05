@@ -10,6 +10,7 @@
         "bootstrap": "^4.6.0",
         "firebase": "^9.13.0",
         "javascript-time-ago": "^2.5.7",
+        "jquery": "^3.6.1",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
         "react-icons": "^4.6.0",

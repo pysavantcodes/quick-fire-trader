@@ -11,9 +11,8 @@ import {
   FiDollarSign,
   FiHelpCircle,
   FiUser,
-
 } from "react-icons/fi";
-
+import $ from "jquery";
 import { FaWhatsapp } from "react-icons/fa";
 
 const Home = () => {
@@ -23,7 +22,12 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getPosts());
+    
   }, []);
+
+
+
+
 
   return (
     <div className="container">
@@ -32,13 +36,12 @@ const Home = () => {
         <div>
           <a href="https://wa.me/+254719832751/">
             <FaWhatsapp
-           
               style={{
                 color: "#202646",
                 fontSize: "50px",
                 padding: ".7rem",
                 background: "rgba(184, 184, 184, 0.7)",
-              
+
                 borderRadius: "50%",
               }}
             />
@@ -60,62 +63,62 @@ const Home = () => {
         </div>
         <div className="rate">
           <a href="#0">
-          <FiStar
-            style={{
-              color: "#202646",
-              fontSize: "50px",
-              padding: ".7rem",
-              background: "rgba(184, 184, 184, 0.7)",
+            <FiStar
+              style={{
+                color: "#202646",
+                fontSize: "50px",
+                padding: ".7rem",
+                background: "rgba(184, 184, 184, 0.7)",
 
-              borderRadius: "50%",
-            }}
-          />
+                borderRadius: "50%",
+              }}
+            />
           </a>
           <p>Rate</p>
         </div>
         <div className="telegram">
           <a href="https://t.me/+v8SGq97FkEk4YzRk">
-          <FiSend
-            style={{
-              color: "#202646",
-              fontSize: "50px",
-              padding: ".7rem",
-              background: "rgba(184, 184, 184, 0.7)",
+            <FiSend
+              style={{
+                color: "#202646",
+                fontSize: "50px",
+                padding: ".7rem",
+                background: "rgba(184, 184, 184, 0.7)",
 
-              borderRadius: "50%",
-            }}
-          />
+                borderRadius: "50%",
+              }}
+            />
           </a>
           <p>Telegram</p>
         </div>
         <div className="facebook">
           <a href="https://www.facebook.com/profile.php?id=100087641640766">
-          <FiFacebook
-            style={{
-              color: "#202646",
-              fontSize: "50px",
-              padding: ".7rem",
-              background: "rgba(184, 184, 184, 0.7)",
+            <FiFacebook
+              style={{
+                color: "#202646",
+                fontSize: "50px",
+                padding: ".7rem",
+                background: "rgba(184, 184, 184, 0.7)",
 
-              borderRadius: "50%",
-            }}
-          />
+                borderRadius: "50%",
+              }}
+            />
           </a>
           <p>Facebook</p>
         </div>
-     
+
         <div className="youtube">
           <a href="https://youtube.com/channel/UCzfOnYvMTT3roPXZ7JfZpZA">
-          <FiYoutube
-            style={{
-              color: "#202646",
-              fontSize: "50px",
-              padding: ".7rem",
-              background: "rgba(184, 184, 184, 0.7)",
+            <FiYoutube
+              style={{
+                color: "#202646",
+                fontSize: "50px",
+                padding: ".7rem",
+                background: "rgba(184, 184, 184, 0.7)",
 
-              borderRadius: "50%",
-            }}
-          />
+                borderRadius: "50%",
+              }}
+            />
           </a>
           <p>Youtube</p>
         </div>
@@ -132,23 +135,27 @@ const Home = () => {
         </p>
       </div>
       <div className="d-flex" style={{ marginTop: "15px" }}>
-        <a style={{ marginRight: "15px" }} className="card box p-3 w-50" href="https://wa.me/+254719832751/">
-        <div>
-          <p>
-            <b>Account Managers</b>
-          </p>
-          <FiUser
-            style={{
-              color: "#202646",
-              fontSize: "40px",
-              padding: ".7rem",
-              background: "rgba(184, 184, 184, 0.7)",
-              marginBottom: "10px",
-              borderRadius: "50%",
-            }}
-          />
-          <p style={{ fontSize: "13px" }}>Brian Ongiri</p>
-        </div>
+        <a
+          style={{ marginRight: "15px" }}
+          className="card box p-3 w-50"
+          href="https://wa.me/+254719832751/"
+        >
+          <div>
+            <p>
+              <b>Account Managers</b>
+            </p>
+            <FiUser
+              style={{
+                color: "#202646",
+                fontSize: "40px",
+                padding: ".7rem",
+                background: "rgba(184, 184, 184, 0.7)",
+                marginBottom: "10px",
+                borderRadius: "50%",
+              }}
+            />
+            <p style={{ fontSize: "13px" }}>Brian Ongiri</p>
+          </div>
         </a>
         <a className=" w-50" href="https://t.me/+v8SGq97FkEk4YzRk">
           <div className="card box p-3">
@@ -163,9 +170,11 @@ const Home = () => {
         </a>
       </div>
       <div className="card mt-3 p-3">
-        <p><b>Advert</b></p>
+        <p>
+          <b>Advert</b>
+        </p>
         <div className="ads">
-        <div id="container-1261e9e73efbf5a14f0b266c74ab6ca4"></div>
+          <div style={{pointerEvents:"none"}} id="container-1261e9e73efbf5a14f0b266c74ab6ca4"></div>
         </div>
       </div>
     </div>

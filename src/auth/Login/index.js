@@ -141,7 +141,7 @@ const Login = ({ loginUser }) => {
                         fontSize: "50px",
                         padding: ".7rem",
                         background: "rgba(184, 184, 184, 0.7)",
-                        margin: ".7rem",
+
                         borderRadius: "50%",
                       }}
                     />
