@@ -11,6 +11,13 @@ h5 {
     margin-bottom: 0;
 }
 
+input[type=file] {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
+}
+
 a:active {
     outline: none;
     box-shadow: none;
