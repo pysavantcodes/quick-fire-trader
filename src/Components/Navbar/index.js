@@ -12,10 +12,10 @@ const Navbar = () => {
   const db = fire.firestore();
 
   const userCheck = useSelector((state) => state.auth.user);
- 
-  const changePage = window.location.href;
-  
-  useEffect(() => {
+
+
+
+  const fetchInfo = ()=>{
     if(userCheck == null){
 
     }else{
@@ -28,13 +28,13 @@ const Navbar = () => {
         }
       });
     }
-   
-    
-  }, [changePage]);
-
+  }
   
 
-
+  const [showModal, setShowModal] = useState(false);
+  const show = () => {
+    setShowModal(false);
+  };
 
   
 
@@ -68,19 +68,18 @@ const Navbar = () => {
     marginRight: "10px",
   };
 
-  const [showModal, setShowModal] = useState(false);
-  const show = () => {
-    setShowModal(false);
-  };
+  
 
   return (
     <nav className="navi" style={navStyle}>
       {showModal ? (
         <Modal
-          name={userCheck == null ? "User name" : userCheck.displayName}
-          email={userCheck == null ? "User email" : userCheck.email}
+          name={!userCheck ? "User name" : userCheck.displayName}
+          email={!userCheck ? "User email" : userCheck.email}
           show={() => show()}
-          wallet={userObj == null ? "0" : userObj.walletBalance}
+          wallet={!userObj.walletBalance ? "0" : userObj.walletBalance.toFixed(2)}
+          plan={!userObj ? "0" : userObj.plan}
+          fetchInfo={()=>fetchInfo()}
         />
       ) : null}
       <div style={newStyle}>

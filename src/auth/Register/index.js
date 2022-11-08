@@ -5,11 +5,12 @@ import { FiSend } from "react-icons/fi";
 import { FaGoogle, FaWhatsapp } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { EmailShareButton, TelegramShareButton, WhatsappShareButton } from "react-share";
+
 
 const Register = ({ registerUser }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [countries, setCountries] = useState([]);
@@ -23,14 +24,14 @@ const Register = ({ registerUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password || !confirmPassword) {
+    if (!name || !email || !password || !confirmPassword || !phone) {
       return toast.warning("Please fill in all fields!!");
 
     } else if(password !==confirmPassword){
       return toast.warning("Passwords do not match!!");
     } else {
       setLoading(true);
-      registerUser({ name, email, password, confirmPassword, country });
+      registerUser({ name, email, password, confirmPassword, country, phone });
       history.push("/auth/login");
     }
   };
@@ -121,6 +122,16 @@ const Register = ({ registerUser }) => {
               </div>
               <div className="form-group">
                 <input
+                  type="tel"
+                  name="phone"
+                  className="form-control"
+                  placeholder="Phone Number e.g +254....."
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                required/>
+              </div>
+              <div className="form-group">
+                <input
                   type="password"
                   name="password"
                   className="form-control"
@@ -165,7 +176,7 @@ const Register = ({ registerUser }) => {
                       }}
                     />
                   </a>
-                  <a href="https://quickfiretraders@gmail.com/">
+                  <a href="mailto: quickfiretraders@gmail.com">
                     <FaGoogle
                       style={{
                         color: "#202646",

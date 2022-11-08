@@ -4,6 +4,8 @@ import 'firebase/compat/auth';
 import "firebase/database";
 import "firebase/storage";
 import { useRef } from "react";
+import { getStorage } from "firebase/storage";
+import { getFirestore } from "firebase/firestore"
 
 // const firebaseConfig = {
 //     apiKey: process.env.React_App_ApiKey,
@@ -24,8 +26,8 @@ const firebaseConfig = {
     measurementId: "G-4J1VTRLLCJ"
 };
 const fire = firebase.initializeApp(firebaseConfig);
-
-export default fire;
+export const storage = getStorage(fire);
+export const db = getFirestore()
 
 export const createUserDocument = async(user, additionalData) => {
     if (!user) return;
@@ -49,3 +51,5 @@ export const createUserDocument = async(user, additionalData) => {
         }
     }
 }
+
+export default fire;

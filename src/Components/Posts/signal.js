@@ -7,6 +7,9 @@ import en from "javascript-time-ago/locale/en";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import { useState } from "react";
 import store from "../..";
+import fire from "../../config/fire";
+import { doc } from "firebase/firestore";
+import { db } from "../../config/fire";
 
 const Signal = () => {
   const { posts, postsLoading,uploaded, isLoggedIn, userId } = useSelector(
@@ -21,7 +24,10 @@ const Signal = () => {
   );
 
   const [loading, setLoading] = useState(false)
-
+  const userCheck = useSelector((state) => state.auth.user);
+  const [userObj, setUserObj] = useState({});
+  const [docRef, setDocRef] = useState({});
+  const store = fire.firestore();
 
   const signal = posts.filter((post) => {
     return post.post.category == "Signal";
@@ -36,6 +42,30 @@ const Signal = () => {
     return 0;
   });
 
+  
+  const signalCategory = signal.filter((signal)=>{
+  
+    if(userObj.plan == "One Week"){
+      return signal.post.signalCategory == "oneweek";
+    }
+    if(userObj.plan == "free"){
+      return signal.post.signalCategory == "all";
+    }
+    if(userObj.plan == "One Month"){
+      return signal.post.signalCategory == "onemonth"
+    }
+    if(userObj.plan == "Life Time"){
+      return signal.post.signalCategory == "lifetime";
+    }
+    if(userObj.plan == "Three Months"){
+      return signal.post.signalCategory == "threemonths";
+    }
+  })
+
+  console.log(signalCategory);
+
+
+
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -47,6 +77,21 @@ const Signal = () => {
 
   useEffect(()=>{
     dispatch(getPosts())
+    const users = doc(db, "users", !userCheck ? "email": userCheck.email);
+    if(userCheck == null){
+
+    }else{
+      store.collection("users")
+      .doc(userCheck.email)
+      .get()
+      .then((snapshot) => {
+        if (snapshot) {
+          setUserObj(snapshot.data())
+        }
+      });
+    }
+  
+    setDocRef(users)
 
   },[])
 
@@ -64,15 +109,15 @@ const Signal = () => {
       className="container"
     >
    
-        {signal.length == 0 && (
+        {signalCategory.length == 0 && (
           <>
-            <h5>No Signal available yet</h5>
+            <h5>No Signal available for {userObj.plan} plan</h5>
             <p>Please wait....</p>
           </>
         )}
         {loading
           ? "Loading Signals..."
-          : signal.map((signal) => {
+          : signalCategory.map((signal) => {
               const tp = signal.post.tp.split("\n");
               const tpVal = signal.post.tpValue.split("\n");
               return (

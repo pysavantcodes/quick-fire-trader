@@ -3,7 +3,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getPosts, newPost, newSignal } from "../../redux/actionCreators/postsActionCreator";
+import {
+  getPosts,
+  newPost,
+  newSignal,
+} from "../../redux/actionCreators/postsActionCreator";
 
 const AddSignal = () => {
   const userId = useSelector((state) => state.auth.userId);
@@ -12,6 +16,7 @@ const AddSignal = () => {
 
   const [currency, setCurrency] = useState("");
   const [option, setOption] = useState("");
+  const [signalCategory, setSignalCategory] = useState("all");
   const [tp, setTP] = useState("");
   const [tpValue, setTPValue] = useState("");
   const [sLValue, setSLValue] = useState("");
@@ -22,8 +27,6 @@ const AddSignal = () => {
   const [mode, setMode] = useState("Tips");
   const [progress, setProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
-
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,19 +45,16 @@ const AddSignal = () => {
       tp,
       sLValue,
       tpValue,
-      category
+      category,
+      signalCategory
     };
-    setUploading(true)
+    setUploading(true);
     dispatch(newPost(data, userId, user.displayName, setProgress));
-    setCurrency("")
-    setSLValue("")
-    setTPValue("")
-    setTP("")
-    
+    setCurrency("");
+    setSLValue("");
+    setTPValue("");
+    setTP("");
   };
-
-  
-  
 
   return (
     <div className="container">
@@ -68,89 +68,95 @@ const AddSignal = () => {
           <h1 className="display-5 text-dark text-center">Upload Signal </h1>
         </div>
         <div className="col-md-6 mx-auto  p-3">
-         
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <input
-                  type="text"
-                  placeholder="GOLD @ 3500"
-                  className="form-control"
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <select onChange={(e) => setOption(e.target.value)}>
-                  <option value="Buy">Buy</option>
-                  <option value="Sell">Sell</option>
-                </select>
-              </div>
-              
-              <div style={{columnGap:"10px"}} className="form-group d-flex">
-                <textarea
-                  placeholder=" Enter TP as: 
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <input
+                type="text"
+                placeholder="GOLD @ 3500"
+                className="form-control"
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <select onChange={(e) => setOption(e.target.value)}>
+                <option value="Buy">Buy</option>
+                <option value="Sell">Sell</option>
+              </select>
+            </div>
+
+            <div style={{ columnGap: "10px" }} className="form-group d-flex">
+              <textarea
+                placeholder=" Enter TP as: 
                   TP1
                   TP2
                   TP3
                   TP4
                   ....
                   "
-                  className="form-control"
-                  rows="8"
-                  value={tp}
-                  onChange={(e) => setTP(e.target.value)}
-                ></textarea>
-                <textarea
-                  placeholder=" Enter TP value as: 
+                className="form-control"
+                rows="8"
+                value={tp}
+                onChange={(e) => setTP(e.target.value)}
+              ></textarea>
+              <textarea
+                placeholder=" Enter TP value as: 
                   10200
                   10200
                   10200
                   10200
                   .....
                   "
-                  className="form-control"
-                  rows="8"
-                  value={tpValue}
-                  onChange={(e) => setTPValue(e.target.value)}
-                ></textarea>
-                {/* <textarea
+                className="form-control"
+                rows="8"
+                value={tpValue}
+                onChange={(e) => setTPValue(e.target.value)}
+              ></textarea>
+              {/* <textarea
                   placeholder="Enter Description"
                   className="form-control"
                   rows="8"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 ></textarea> */}
-              </div>
-              <div style={{columnGap:"10px"}} className="form-group d-flex">
-                <input
-                  type="text"
-                  placeholder="SL"
-                  className="form-control"
-                  value="SL"
-                  disabled
-                />
-                <input
-                  type="number"
-                  placeholder="35000"
-                  className="form-control"
-                  value={sLValue}
-                  onChange={(e) => setSLValue(e.target.value)}
-                />
-              </div>
-           
-              <div className="form-group">
-                <input
-                  type="submit"
-                  className="btn btn-dark btn-block"
-                  value={`Add to signals`}
-                />
-              </div>
-              {
-                uploading && progress !== 100 ? "Uploading, please wait..." : "Uploaded, waiting for next upload"
-              }
-              <p onClick={()=>getPosts()}>Get</p>
-            </form>
-          
+            </div>
+            <div style={{ columnGap: "10px" }} className="form-group d-flex">
+              <input
+                type="text"
+                placeholder="SL"
+                className="form-control"
+                value="SL"
+                disabled
+              />
+              <input
+                type="number"
+                placeholder="35000"
+                className="form-control"
+                value={sLValue}
+                onChange={(e) => setSLValue(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <select onChange={(e) => setSignalCategory(e.target.value)}>
+                <option value="all">Post Signal to Free</option>
+                <option value="oneweek">Post Signal to 1 week</option>
+                <option value="onemonth">Post Signal to 1 Month</option>
+                <option value="threemonths">Post Signal to 3 Months</option>
+                <option value="lifetime">Post Signal to Lifetime</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <input
+                type="submit"
+                className="btn btn-dark btn-block"
+                value={`Add signal`}
+              />
+            </div>
+            {uploading && progress !== 100
+              ? "Uploading, please wait..."
+              : "Uploaded, waiting for next upload"}
+          </form>
         </div>
       </div>
     </div>

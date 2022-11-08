@@ -22,6 +22,7 @@ const AddPost = () => {
   const [tpValue, setTPValue] = useState("");
   const [sLValue, setSLValue] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [signalCategory, setSignalCategory] = useState("all");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,6 +56,7 @@ const AddPost = () => {
       tp,
       sLValue,
       tpValue,
+      signalCategory
     };
     setUploading(true)
     dispatch(newPost(data, userId, user.displayName, setProgress));

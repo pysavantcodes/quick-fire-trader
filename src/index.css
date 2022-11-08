@@ -297,3 +297,18 @@ select {
     background-color: rgba(73, 85, 151, 0.549);
     border: none;
 }
+
+.btns {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: space-around;
+    grid-gap: 20px;
+    padding: 1rem 0;
+}
+
+.btns p {
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}

@@ -123,7 +123,7 @@ const Login = ({ loginUser }) => {
                       }}
                     />
                   </a>
-                  <a href="https://quickfiretraders@gmail.com/">
+                  <a href="mailto: quickfiretraders@gmail.com">
                     <FaGoogle
                       style={{
                         color: "#202646",

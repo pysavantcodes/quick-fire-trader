@@ -57,8 +57,8 @@ const Auth = () => {
   };
 
   // register user
-  const registerUser = ({ name, email, password, confirmPassword, country }) => {
-    if (!name || !email || !password || !confirmPassword || !country) {
+  const registerUser = ({ name, email, password, confirmPassword, country, phone }) => {
+    if (!name || !email || !password || !confirmPassword || !country || !phone) {
       return toast.warning("Please fill in all fields!!");
     }
 
@@ -77,7 +77,10 @@ const Auth = () => {
           email,
           country,
           walletBalance: 0,
-          createdAt: Date(),
+          phone,
+          plan:"free",
+          createdAt: Date.now(),
+          planStart: Date.now(),
         }).then((docRef)=>{
           const docId = docRef.id;
           console.log(docId);

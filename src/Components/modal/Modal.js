@@ -7,20 +7,20 @@ import { FaGoogle, FaWhatsapp } from "react-icons/fa";
 import { Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import fire from "../../config/fire";
-import GooglePayButton from "@google-pay/button-react";
+import fire, { db } from "../../config/fire";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import { useState , useEffect} from "react";
+import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
+import { useSelector } from "react-redux";
 
-const Modal = ({ show, name, email, wallet }) => {
+const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
   window.onclick = (e) => {
+    fetchInfo()
     if (e.path[0].className === "modal-bg") {
       document.querySelector(".modal-bg").style.display = "none";
       show();
     }
   };
-
-  const { path } = useRouteMatch();
-  const dispatch = useDispatch();
-  const history = useHistory();
 
   const logoutUser = () => {
     fire
@@ -34,6 +34,136 @@ const Modal = ({ show, name, email, wallet }) => {
       .catch((error) => toast.error(error.message));
   };
 
+  const { path } = useRouteMatch();
+  const dispatch = useDispatch();
+  const store = fire.firestore();
+  const history = useHistory();
+
+  /**states */
+  const [fundAmount, setFundAmount] = useState("");
+  const [docRef, setDocRef] = useState({});
+  const [currency, setCurrency] = useState("KES");
+  const [userObj, setUserObj] = useState({});
+
+  /**Currencies */
+  // const currencies = ["KES","CAD","XAF","CLP","COP","EGP","EUR","GHS","GNF","GBP","MWK","MAD","NGN","RWF","SLL","STD","ZAR","TZS","UGX","USD","XOF","ZMW"]
+  const currencies = ["KES","NGN"]
+
+  const userCheck = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    
+    const users = doc(db, "users", email);
+    setDocRef(users)
+    fetchInfo()
+
+    if(userCheck == null){
+
+    }else{
+      store.collection("users")
+      .doc(userCheck.email)
+      .get()
+      .then((snapshot) => {
+        if (snapshot) {
+          setUserObj(snapshot.data())
+        }
+      });
+    }
+  
+    setDocRef(users)
+    
+  const daysSpent = Math.floor((Date.now() - new Date(userObj.planStart).getTime())/(1000 * 60 * 60 * 24));
+
+  if(userObj.plan !== "free"){
+    if(userObj.plan === "One Week"){
+      if(daysSpent >= 7){
+        updateDoc(docRef,{
+          plan:"free",
+          planStart: Date.now()
+        })
+      }
+    }
+    if(userObj.plan === "One Month"){
+      if(daysSpent >= 30){
+        updateDoc(docRef,{
+          plan:"free",
+          planStart: Date.now()
+        })
+      }
+    }
+    if(userObj.plan === "Three Months"){
+      if(daysSpent >= 90){
+        updateDoc(docRef,{
+          plan:"free",
+          planStart: Date.now()
+        })
+      }
+    }
+  }
+  },[])
+
+  const optOut = ()=>{
+    updateDoc(docRef,{
+      plan:"free",
+      planStart: Date.now()
+    })
+    toast.success("Successfully Opted out from plan.")
+
+  }
+  
+
+  const fund = () => {
+  
+    if (!fundAmount) {
+      toast.warning("Please enter an amount!");
+    } else {
+      handleFlutterPayment({
+        callback: (response) => {
+          console.log(response);
+
+          if (response) {
+            if (response.status == "successful") {
+              
+              updateDoc(docRef,{
+                walletBalance: Number(wallet) + response.amount,
+              })
+              fetchInfo();
+              closePaymentModal();
+              setFundAmount("");
+              return toast.success("Account Funded Successfully");
+            }
+            closePaymentModal();
+            return toast.error("Funding UnSuccessful");
+          }
+          // this will close the modal programmatically
+        },
+        onClose: () => {
+          return toast.warning("Payment Cancelled");
+        },
+      });
+    }
+  };
+
+  const config = {
+    public_key: "FLWPUBK_TEST-041b59e378e8156458c446b3f25206fe-X",
+    tx_ref: Date.now(),
+    amount: Number(fundAmount),
+    currency: currency,
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: email,
+      phone_number: "08095794273",
+      name: name,
+    },
+    customizations: {
+      title: "Deposit Amount",
+      description: "Payment for items in cart",
+      logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+    },
+  };
+
+  const handleFlutterPayment = useFlutterwave(config);
+
   return (
     <div className="modal-bg">
       <div className="mod">
@@ -44,13 +174,15 @@ const Modal = ({ show, name, email, wallet }) => {
             </div>
             <div className="txt">
               <p style={{ fontSize: "15px", fontWeight: "500" }}>
-                Hello, {name}
+                {name}
               </p>
               <p style={{ fontSize: "14px" }}>{email}</p>
             </div>
           </div>
-          <div className="wallet">
-            My wallet <br /> ${wallet}
+          <div style={{ textAlign:"right"}} className="wallet pl-1">
+            <p style={{fontSize:"13px"}}>💰: KES {wallet}</p>
+            <span style={{fontSize:"12px"}}><i>Plan : {plan}</i></span><br />
+            {userObj.plan !== "free" ? <button style={{fontSize:"12px"}} className="btn btn-primary" onClick={()=>optOut()}>Opt Out</button> : null}
           </div>
         </div>
         <h4>
@@ -58,12 +190,28 @@ const Modal = ({ show, name, email, wallet }) => {
           your anticipation.
         </h4>
         <div className="donate">
-          <p>$2</p>
+          <p>20 KES</p>
           <button className="btn btn-black w-100">Donate</button>
         </div>
-        <button className="btn btn-primary mb-2 w-100">
-          &#x1F4B8; Fund Account
-        </button>
+        <div className="d-flex">
+          <select onChange={(e)=>setCurrency(e.target.value)} name="currency" style={{ width: "40%" }} className="form-control mr-2">
+            {currencies.map((currency, index)=>{
+              return <option value={currency} key={index}>{currency}</option>
+              
+            })}
+          </select>
+          <input
+            placeholder="10.0"
+            type="number"
+            style={{ width: "25%" }}
+            className="form-control mr-2"
+            min={10}
+            onChange={(e) => setFundAmount(e.target.value)}
+          />
+          <button onClick={() => fund()} className="btn btn-primary mb-2 w-100">
+            &#x1F4B8; Fund Account
+          </button>
+        </div>
         <button
           style={{ columnGap: "10px" }}
           className="btn btn-primary d-flex mx-auto justify-content-between align-items-center my-2"
@@ -75,7 +223,8 @@ const Modal = ({ show, name, email, wallet }) => {
           <p>Connect to us Via</p>
           <div className="mb-1">
             <a href="https://www.facebook.com/profile.php?id=100087641640766">
-              <FiFacebook id="ic"
+              <FiFacebook
+                id="ic"
                 style={{
                   color: "#202646",
                   fontSize: "45px",
@@ -87,7 +236,8 @@ const Modal = ({ show, name, email, wallet }) => {
               />
             </a>
             <a href="https://t.me/+v8SGq97FkEk4YzRk">
-              <FiSend id="ic"
+              <FiSend
+                id="ic"
                 style={{
                   color: "#202646",
                   fontSize: "45px",
@@ -99,7 +249,8 @@ const Modal = ({ show, name, email, wallet }) => {
               />
             </a>
             <a href="https://youtube.com/channel/UCzfOnYvMTT3roPXZ7JfZpZA">
-              <FiYoutube id="ic"
+              <FiYoutube
+                id="ic"
                 style={{
                   color: "#202646",
                   fontSize: "45px",
@@ -111,7 +262,8 @@ const Modal = ({ show, name, email, wallet }) => {
               />
             </a>
             <a href="https://quickfiretraders@gmail.com">
-              <FaGoogle id="ic"
+              <FaGoogle
+                id="ic"
                 style={{
                   color: "#202646",
                   fontSize: "45px",
@@ -123,7 +275,8 @@ const Modal = ({ show, name, email, wallet }) => {
               />
             </a>
             <a href="https://wa.me/+254719832751/">
-              <FaWhatsapp id="ic"
+              <FaWhatsapp
+                id="ic"
                 style={{
                   color: "#202646",
                   fontSize: "45px",

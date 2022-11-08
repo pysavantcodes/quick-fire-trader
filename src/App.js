@@ -21,6 +21,7 @@ import Auth from "./auth"
 import Shop from "./Components/Posts/shop";
 import Tips from "./Components/Posts/tip";
 import Signal from "./Components/Posts/signal";
+import Pay from "./Components/pay";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -100,9 +101,13 @@ const App = () => {
           <Route path={"/auth"}>
             <Auth />
           </Route>
-          {!pathname.includes("/admin") && !pathname.includes("/auth") ? <Footer /> : null}
           
+          {!pathname.includes("/admin") && !pathname.includes("/auth") ? <Footer /> : null}
+          <Route path={"/pay"}>
+            <Pay />
+          </Route>
         </Route>
+        
       </Switch>
     </div>
   );
