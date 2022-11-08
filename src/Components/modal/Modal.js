@@ -289,7 +289,7 @@ const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
             </a>
           </div>
         </div>
-        {email == "brianongiri9@gmail.com" ? <NavLink to="/admin"><button className="btn btn-black w-100 mb-2">
+        {email == "brianongiri9@gmail.com" || email == "uwakblessing1@gmail.com" ? <NavLink to="/admin"><button className="btn btn-black w-100 mb-2">
           Admin Panel
         </button></NavLink> : null}
         <button onClick={() => logoutUser()} className="btn btn-primary w-100">
