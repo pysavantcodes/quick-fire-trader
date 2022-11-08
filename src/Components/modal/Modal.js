@@ -4,7 +4,7 @@ import { FiFacebook } from "react-icons/fi";
 import { FiSend } from "react-icons/fi";
 import { FiYoutube } from "react-icons/fi";
 import { FaGoogle, FaWhatsapp } from "react-icons/fa";
-import { Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
+import { NavLink, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import fire, { db } from "../../config/fire";
@@ -289,9 +289,13 @@ const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
             </a>
           </div>
         </div>
+        {email == "brianongiri9@gmail.com" ? <NavLink to="/admin"><button className="btn btn-black w-100 mb-2">
+          Admin Panel
+        </button></NavLink> : null}
         <button onClick={() => logoutUser()} className="btn btn-primary w-100">
           Logout
         </button>
+        
       </div>
     </div>
   );

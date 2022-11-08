@@ -62,7 +62,6 @@ const Signal = () => {
     }
   })
 
-  console.log(signalCategory);
 
 
 
