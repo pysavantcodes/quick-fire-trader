@@ -44,6 +44,7 @@ const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
   const [docRef, setDocRef] = useState({});
   const [currency, setCurrency] = useState("KES");
   const [userObj, setUserObj] = useState({});
+  const [daysSpent, setDaysSpent] = useState(0)
 
   /**Currencies */
   // const currencies = ["KES","CAD","XAF","CLP","COP","EGP","EUR","GHS","GNF","GBP","MWK","MAD","NGN","RWF","SLL","STD","ZAR","TZS","UGX","USD","XOF","ZMW"]
@@ -60,19 +61,31 @@ const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
     if(userCheck == null){
 
     }else{
-      store.collection("users")
-      .doc(userCheck.email)
-      .get()
-      .then((snapshot) => {
-        if (snapshot) {
-          setUserObj(snapshot.data())
+      const fetchData = async()=>{
+        try{
+          await store
+        .collection("users")
+        .doc(userCheck.email)
+        .get()
+        .then((snapshot) => {
+          if (snapshot) {
+            setDaysSpent(Math.floor(
+              (Date.now() - new Date(snapshot.data().planStart).getTime()) /
+                (1000 * 60 * 60 * 24)
+            ))
+            setUserObj(snapshot.data());
+          }
+        });
+        }catch(err){
+          toast.error(err)
         }
-      });
+       }
+       fetchData();
     }
   
     setDocRef(users)
     
-  const daysSpent = Math.floor((Date.now() - new Date(userObj.planStart).getTime())/(1000 * 60 * 60 * 24));
+  
 
   if(userObj.plan !== "free"){
     if(userObj.plan === "One Week"){
@@ -261,7 +274,7 @@ const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
                 }}
               />
             </a>
-            <a href="https://quickfiretraders@gmail.com">
+            <a href="mailto: quickfiretraders@gmail.com">
               <FaGoogle
                 id="ic"
                 style={{

@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import fire from "../../config/fire";
 import { db } from "../../config/fire";
 import { doc, updateDoc } from "firebase/firestore";
-import timeSince from "../timeSince";
 import { getPosts } from "../../redux/actionCreators/postsActionCreator";
-import {
-  FacebookShareButton,
-  TelegramShareButton,
-  WhatsappShareButton,
-} from "react-share";
 import {
   FiFacebook,
   FiYoutube,
@@ -32,112 +25,118 @@ const Home = () => {
   const userCheck = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const [docRef, setDocRef] = useState({});
+  const [daysSpent, setDaysSpent] = useState(0)
 
   useEffect(() => {
     dispatch(getPosts());
-    if(userCheck == null){
-
-    }else{
-      store.collection("users")
+    if (userCheck == null) {
+    } else {
+     const fetchData = async()=>{
+      try{
+        await store
+      .collection("users")
       .doc(userCheck.email)
       .get()
       .then((snapshot) => {
         if (snapshot) {
-          setUserObj(snapshot.data())
+          setDaysSpent(Math.floor(
+            (Date.now() - new Date(snapshot.data().planStart).getTime()) /
+              (1000 * 60 * 60 * 24)
+          ))
+          setUserObj(snapshot.data());
         }
       });
+      }catch(err){
+        toast.error(err)
+      }
+     }
+     fetchData();
     }
-    const users = doc(db, "users", !userCheck ? "email": userCheck.email);
-    setDocRef(users)
-    
-  const daysSpent = Math.floor((Date.now() - new Date(userObj.planStart).getTime())/(1000 * 60 * 60 * 24));
+    const users = doc(db, "users", !userCheck ? "email" : userCheck.email);
+    setDocRef(users);
 
-  if(userObj.plan !== "free"){
-    if(userObj.plan === "One Week"){
-      if(daysSpent >= 7){
-        updateDoc(docRef,{
-          plan:"free",
-          planStart: Date.now()
-        })
+    console.log(daysSpent);
+
+
+    if (userObj.plan !== "free") {
+      if (userObj.plan === "One Week") {
+        if (daysSpent >= 7) {
+          updateDoc(docRef, {
+            plan: "free",
+            planStart: Date.now(),
+          });
+        }
+      }
+      if (userObj.plan === "One Month") {
+        if (daysSpent >= 30) {
+          updateDoc(docRef, {
+            plan: "free",
+            planStart: Date.now(),
+          });
+        }
+      }
+      if (userObj.plan === "Three Months") {
+        if (daysSpent >= 90) {
+          updateDoc(docRef, {
+            plan: "free",
+            planStart: Date.now(),
+          });
+        }
       }
     }
-    if(userObj.plan === "One Month"){
-      if(daysSpent >= 30){
-        updateDoc(docRef,{
-          plan:"free",
-          planStart: Date.now()
-        })
-      }
-    }
-    if(userObj.plan === "Three Months"){
-      if(daysSpent >= 90){
-        updateDoc(docRef,{
-          plan:"free",
-          planStart: Date.now()
-        })
-      }
-    }
-  }
   }, []);
 
-  
-
-
-  const oneWeek = ()=>{
-    if(userObj.walletBalance > 972.8){
-      updateDoc(docRef,{
+  const oneWeek = () => {
+    if (userObj.walletBalance > 972.8) {
+      updateDoc(docRef, {
         walletBalance: Number(userObj.walletBalance) - 972.8,
-        plan:"One Week",
-        planStart: Date.now()
-      })
+        plan: "One Week",
+        planStart: Date.now(),
+      });
       return toast.success("One Week Plan Activated");
-    }else{
-      return toast.warning("Insufficient Balance")
+    } else {
+      return toast.warning("Insufficient Balance");
     }
     // updateDoc(docRef,{
     //   walletBalance: Number(wallet) + response.amount,
     // })
-    
-  }
-  const oneMonth = ()=>{
-    if(userObj.walletBalance > 2432){
-      updateDoc(docRef,{
+  };
+  const oneMonth = () => {
+    if (userObj.walletBalance > 2432) {
+      updateDoc(docRef, {
         walletBalance: Number(userObj.walletBalance) - 2432,
-        plan:"One Month",
-        planStart: Date.now()
-      })
+        plan: "One Month",
+        planStart: Date.now(),
+      });
       return toast.success("One Month Plan Activated");
-    }else{
-      return toast.warning("Insufficient Balance")
+    } else {
+      return toast.warning("Insufficient Balance");
     }
-
-  }
-  const threeMonths = ()=>{
-    if(userObj.walletBalance > 5107.20){
-      updateDoc(docRef,{
-        walletBalance: Number(userObj.walletBalance) - 5107.20,
-        plan:"Three Months",
-        planStart: Date.now()
-      })
+  };
+  const threeMonths = () => {
+    if (userObj.walletBalance > 5107.2) {
+      updateDoc(docRef, {
+        walletBalance: Number(userObj.walletBalance) - 5107.2,
+        plan: "Three Months",
+        planStart: Date.now(),
+      });
       return toast.success("Three Month Plan Activated");
-    }else{
-      return toast.warning("Insufficient Balance")
+    } else {
+      return toast.warning("Insufficient Balance");
     }
-  }
-  const lifeTime = ()=>{
-    if(userObj.walletBalance > 9606.40){
-      updateDoc(docRef,{
-        walletBalance: Number(userObj.walletBalance) - 9606.40,
-        plan:"Life Time",
-        planStart: Date.now()
-      })
+  };
+  const lifeTime = () => {
+    if (userObj.walletBalance > 9606.4) {
+      updateDoc(docRef, {
+        walletBalance: Number(userObj.walletBalance) - 9606.4,
+        plan: "Life Time",
+        planStart: Date.now(),
+      });
       return toast.success("LifeTime Plan Activated");
-    }else{
-      return toast.warning("Insufficient Balance")
+    } else {
+      return toast.warning("Insufficient Balance");
     }
-  }
-
-  
+  };
 
   return (
     <div className="container">
@@ -298,19 +297,43 @@ const Home = () => {
         <div className="btns">
           <div>
             <p>1 Week = 972.8 KES</p>
-            <button onClick={()=>oneWeek()} className="btn btn-primary" disabled={userObj.plan !== "free" ? true : false}>Subscribe</button>
+            <button
+              onClick={() => oneWeek()}
+              className="btn btn-primary"
+              disabled={userObj.plan !== "free" ? true : false}
+            >
+              Subscribe
+            </button>
           </div>
           <div>
             <p>1 Month = 2,432 KES</p>
-            <button onClick={()=>oneMonth()} className="btn btn-primary" disabled={userObj.plan !== "free" ? true : false}>Subscribe</button>
+            <button
+              onClick={() => oneMonth()}
+              className="btn btn-primary"
+              disabled={userObj.plan !== "free" ? true : false}
+            >
+              Subscribe
+            </button>
           </div>
           <div>
             <p>3 Month = 5107.20 KES</p>
-            <button onClick={()=>threeMonths()} className="btn btn-primary" disabled={userObj.plan !== "free" ? true : false}>Subscribe</button>
+            <button
+              onClick={() => threeMonths()}
+              className="btn btn-primary"
+              disabled={userObj.plan !== "free" ? true : false}
+            >
+              Subscribe
+            </button>
           </div>
           <div>
             <p>Lifetime = 9606.40 KES</p>
-            <button onClick={()=>lifeTime()} className="btn btn-danger" disabled={userObj.plan !== "free" ? true : false}>Subscribe</button>
+            <button
+              onClick={() => lifeTime()}
+              className="btn btn-danger"
+              disabled={userObj.plan !== "free" ? true : false}
+            >
+              Subscribe
+            </button>
           </div>
         </div>
         <p style={{ fontSize: "14px" }}>
@@ -334,12 +357,19 @@ const Home = () => {
         >
           Trade 24/7, Trade with Quick Fire Trader Today!
         </p>
+        
+        <div style={{ borderRadius: "7px" }} className="textonimg mt-3">
         <img
-          style={{ borderRadius: "7px" }}
-          className="w-100 mt-3"
+          
+          className="w-100"
           src="https://www.uktech.news/wp-content/uploads/2022/02/shutterstock_1487940437.jpg"
           alt=""
         />
+          <div className="bottom-left">
+            <p><a href="https://track.deriv.com/_aUlF11YKsMhBMfcXPt5VjGNd7ZgqdRLk/1/" style={{color:"white"}}>Join Now</a></p>
+          </div>
+          
+        </div>
         <p className="text-center mb-1 mt-3">
           <b>Support</b>
         </p>
@@ -352,7 +382,6 @@ const Home = () => {
           style={{ textAlign: "center", marginTop: ".5rem" }}
           className="connect"
         >
-         
           <a href="https://t.me/+v8SGq97FkEk4YzRk">
             <FiSend
               style={{

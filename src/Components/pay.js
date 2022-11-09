@@ -1,51 +1,30 @@
-import React from 'react';
-import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
-import { toast } from 'react-toastify';
+import { InterswitchPay } from "react-interswitch";
 
 export default function Pay() {
-  const config = {
-    public_key: 'FLWPUBK_TEST-041b59e378e8156458c446b3f25206fe-X',
-    tx_ref: Date.now(),
-    amount: 100,
-    currency: 'KES',
-    payment_options: 'card,mobilemoney,ussd,mpesa',
-    customer: {
-      email: 'uwakblessing1@gmail.com',
-       phone_number: '08095794273',
-      name: 'Uwak Bboi',
-    },
-    customizations: {
-      title: 'Deposit Amount',
-      description: 'Payment for items in cart',
-      logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
-    },
-  };
+  const props = {
+    merchantCode: "MX6072",
+    payItemID: "9405967",
+    customerEmail: "johndoe@gmail.com",
+    customerId: "Lucifer",
+    redirectURL: "http://localhost:3000",
+    text: 'Pay Now',
+    mode: 'TEST',
+    txn_ref: "sample_txn_ref_123",
+    transactionReference: Date.now().toString(),
+    amount: '10000',
+    currency:"404",
+    className:"btn btn-primary",
+    callback: (response) => {
+      console.log('response: ', response)
+    }
+  }
+  
 
-  const handleFlutterPayment = useFlutterwave(config);
-
+  
 
   return (
-    <div className="App container">
-     <h1>Hello Test user</h1>
-
-      <button
-        onClick={() => {
-          handleFlutterPayment({
-            callback: (response) => {
-               console.log(response);
-               
-               if(response.status == "successful"){
-                return toast.success("Transaction Completed");
-                closePaymentModal()
-               }
-                 // this will close the modal programmatically
-            },
-            onClose: () => {},
-          });
-        }}
-      >
-        Payment with React hooks
-      </button>
+    <div className="container">
+      <InterswitchPay {...props} />
     </div>
   );
 }
