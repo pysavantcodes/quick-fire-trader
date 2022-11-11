@@ -13,7 +13,7 @@ const Footer = () => {
     width: "100%",
     background:"#202646",
     padding:"1rem 1.5rem",
-    zIndex:"999",
+    zIndex:"1",
     boxShadow:"0 3px 10px rgba(0,0,0,0.3)",
     paddingBottom:"0rem",
     borderTopRightRadius:"20px",
