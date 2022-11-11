@@ -44,7 +44,7 @@ const Navbar = () => {
     width: "100%",
 
     padding: ".6rem",
-    zIndex: "9999999",
+    zIndex: "1",
   };
   const newStyle = {
     width: "100%",
