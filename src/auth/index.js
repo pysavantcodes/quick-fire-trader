@@ -81,6 +81,7 @@ const Auth = () => {
           plan:"free",
           createdAt: Date.now(),
           planStart: Date.now(),
+          blocked:false
         }).then((docRef)=>{
           const docId = docRef.id;
           console.log(docId);

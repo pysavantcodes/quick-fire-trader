@@ -20,6 +20,7 @@ import $ from "jquery";
 import { FaWhatsapp, FaGoogle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import TimeAgo from "javascript-time-ago";
+import Blocked from "../modal/Blocked";
 
 const Home = () => {
   const [userObj, setUserObj] = useState({});
@@ -183,6 +184,7 @@ const Home = () => {
 
   return (
     <div className="container">
+      {userObj !== null && userObj.blocked == true ? <Blocked links={links}/> : null}
       <h5>Hello, {userCheck == null ? "user" : userCheck.displayName}</h5>
       <div className="head-row">
         <div>

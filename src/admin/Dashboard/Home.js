@@ -17,6 +17,7 @@ const Home = () => {
   
 
   const [posts, setPosts] = useState();
+  const store = fire.firestore();
 
   useEffect(() => {
     const db = fire.firestore();
@@ -27,29 +28,29 @@ const Home = () => {
     });
   }, []);
 
-  const deleteUser = () => {
-    const markedForDelete = [];
+  const blockUser = async (user) => {
+    try{
+      await store.collection("users").doc(user).update({
+        blocked:true
+      }).then(()=>{
+        toast.success("Blocked User Successfully")
+      })
 
-    //   admin
-    //     .auth()
-    //     .getUsers("uwakblessing1@gmail.com")
-    //     .then((result) => {
-    //       // Mark disabled accounts for deletion.
-    //       // result.users.forEach((user) => {
-    //       //   if (user.disabled) {
-    //       //     markedForDelete.push(user.uid);
-    //       //   }
-    //       // });
+    }catch(err){
+      toast.error("Unable to block User")
+    }
+  };
+  const unBlockUser = async (user) => {
+    try{
+      await store.collection("users").doc(user).update({
+        blocked:false
+      }).then(()=>{
+        toast.success("Unblocked User Successfully")
+      })
 
-    //       // result.notFound.forEach((uid) => {
-    //       //   console.log(`No user found for identifier: ${JSON.stringify(uid)}`);
-    //       // });
-    //       console.log(result);
-    //     })
-    //     .then(() => {
-    //       // Delete all marked user accounts in a single API call.
-    //       // return admin.auth().deleteUsers(markedForDelete);
-    //     });
+    }catch(err){
+      toast.error("Unable to unblock User")
+    }
   };
 
   const updateWhatsapp = ()=>{
@@ -164,7 +165,7 @@ const Home = () => {
               <th scope="col">Plan</th>
               <th scope="col">Phone</th>
               <th scope="col">Email</th>
-              {/* <th scope="col">Delete User</th> */}
+              <th scope="col">Block or Unblock user</th>
             </tr>
           </thead>
           <tbody>
@@ -180,14 +181,25 @@ const Home = () => {
                       <td>{user.plan}</td>
                       <td>{user.phone}</td>
                       <td>{user.email}</td>
-                      {/* <td>
-                        <button
-                          onClick={() => deleteUser()}
+                      <td>
+                        {user.blocked == true ? (
+                          <button
+                          onClick={() => unBlockUser(user.email)}
+                          className="btn btn-success"
+                        >
+                          Unblock User
+                        </button>
+                        ):
+                        (
+                          <button
+                          onClick={() => blockUser(user.email)}
                           className="btn btn-danger"
                         >
-                          Delete
+                          Block User
                         </button>
-                      </td> */}
+
+                        )}
+                      </td>
                     </tr>
                   );
                 })}
