@@ -4,6 +4,7 @@ import fire from "../../config/fire";
 import { db } from "../../config/fire";
 import { doc, updateDoc } from "firebase/firestore";
 import { getPosts } from "../../redux/actionCreators/postsActionCreator";
+import { RWebShare } from "react-web-share";
 import {
   FiFacebook,
   FiYoutube,
@@ -13,6 +14,7 @@ import {
   FiDollarSign,
   FiHelpCircle,
   FiUser,
+  FiBookOpen,
 } from "react-icons/fi";
 import $ from "jquery";
 import { FaWhatsapp, FaGoogle } from "react-icons/fa";
@@ -25,66 +27,100 @@ const Home = () => {
   const userCheck = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const [docRef, setDocRef] = useState({});
-  const [daysSpent, setDaysSpent] = useState(0)
+  const [daysSpent, setDaysSpent] = useState(0);
+  const [links, setLinks] = useState([
+    {
+      email: "quickfiretrader@gmail.com",
+      facebook: "https://www.facebook.com/profile.php?id=100087641640766",
+      telegram: "https://t.me/+v8SGq97FkEk4YzRk",
+      whatsapp: "https://wa.me/+254768125852/",
+      youtube: "https://youtube.com/channel/UCzfOnYvMTT3roPXZ7JfZpZA",
+    },
+  ]);
 
   useEffect(() => {
     dispatch(getPosts());
     if (userCheck == null) {
     } else {
-     const fetchData = async()=>{
-      try{
-        await store
-      .collection("users")
-      .doc(userCheck.email)
-      .get()
-      .then((snapshot) => {
-        if (snapshot) {
-          setDaysSpent(Math.floor(
-            (Date.now() - new Date(snapshot.data().planStart).getTime()) /
-              (1000 * 60 * 60 * 24)
-          ))
-          setUserObj(snapshot.data());
+      const fetchData = async () => {
+        try {
+          await store
+            .collection("users")
+            .doc(userCheck.email)
+            .get()
+            .then((snapshot) => {
+              if (snapshot) {
+                setDaysSpent(
+                  Math.floor(
+                    (Date.now() -
+                      new Date(snapshot.data().planStart).getTime()) /
+                      (1000 * 60 * 60 * 24)
+                  )
+                );
+
+                setUserObj(snapshot.data());
+              }
+            });
+        } catch (err) {
+          toast.error(err);
         }
-      });
-      }catch(err){
-        toast.error(err)
-      }
-     }
-     fetchData();
+      };
+
+      fetchData();
     }
+    const fetchLinks = async () => {
+      try {
+        await store
+          .collection("links")
+          .doc("izyQeo1ByOWQqz1kmpb8")
+          .get()
+          .then((snapshot) => {
+            if (snapshot) {
+              var data = [];
+              data.push(snapshot.data());
+              console.log(snapshot.data());
+              setLinks(data);
+            }
+          });
+      } catch (err) {
+        toast.error(err);
+      }
+    };
+    fetchLinks();
+
     const users = doc(db, "users", !userCheck ? "email" : userCheck.email);
     setDocRef(users);
+  }, []);
 
-    console.log(daysSpent);
-
-
-    if (userObj.plan !== "free") {
-      if (userObj.plan === "One Week") {
-        if (daysSpent >= 7) {
-          updateDoc(docRef, {
-            plan: "free",
-            planStart: Date.now(),
-          });
-        }
-      }
-      if (userObj.plan === "One Month") {
-        if (daysSpent >= 30) {
-          updateDoc(docRef, {
-            plan: "free",
-            planStart: Date.now(),
-          });
-        }
-      }
-      if (userObj.plan === "Three Months") {
-        if (daysSpent >= 90) {
-          updateDoc(docRef, {
-            plan: "free",
-            planStart: Date.now(),
-          });
-        }
+  if (userObj.plan !== "free") {
+    if (userObj.plan === "One Week") {
+      if (daysSpent >= 7) {
+        updateDoc(docRef, {
+          plan: "free",
+          planStart: Date.now(),
+        });
       }
     }
-  }, []);
+    if (userObj.plan === "One Month") {
+      if (daysSpent >= 30) {
+        updateDoc(docRef, {
+          plan: "free",
+          planStart: Date.now(),
+        });
+      }
+    }
+    if (userObj.plan === "Three Months") {
+      if (daysSpent >= 90) {
+        updateDoc(docRef, {
+          plan: "free",
+          planStart: Date.now(),
+        });
+      }
+    }
+  }
+
+  console.log(links);
+  console.log(daysSpent);
 
   const oneWeek = () => {
     if (userObj.walletBalance > 972.8) {
@@ -138,12 +174,19 @@ const Home = () => {
     }
   };
 
+  const share = () => {
+    navigator.clipboard.writeText(
+      "https://track.deriv.com/_aUlF11YKsMhBMfcXPt5VjGNd7ZgqdRLk/1/"
+    );
+    toast.success("Link copied to clipboard");
+  };
+
   return (
     <div className="container">
       <h5>Hello, {userCheck == null ? "user" : userCheck.displayName}</h5>
       <div className="head-row">
         <div>
-          <a href="https://wa.me/+254719832751/">
+          <a href={links !== null ? links[0].whatsapp : "#0"}>
             <FaWhatsapp
               style={{
                 color: "#202646",
@@ -170,6 +213,21 @@ const Home = () => {
           />
           <p>Subscribe</p>
         </div>
+        <div className="sub">
+          <a href={links !== null ? links[0].telegram : "#0"}>
+          <FiBookOpen
+            style={{
+              color: "#202646",
+              fontSize: "50px",
+              padding: ".7rem",
+              background: "rgba(184, 184, 184, 0.7)",
+
+              borderRadius: "17px",
+            }}
+          />
+          </a>
+          <p>Class</p>
+        </div>
         <div className="rate">
           <a href="#0">
             <FiStar
@@ -186,7 +244,7 @@ const Home = () => {
           <p>Rate</p>
         </div>
         <div className="telegram">
-          <a href="https://t.me/+v8SGq97FkEk4YzRk">
+          <a href={links !== null ? links[0].telegram : "#0"}>
             <FiSend
               style={{
                 color: "#202646",
@@ -201,7 +259,7 @@ const Home = () => {
           <p>Telegram</p>
         </div>
         <div className="facebook">
-          <a href="https://www.facebook.com/profile.php?id=100087641640766">
+          <a href={links !== null ? links[0].telegram : "#0"}>
             <FiFacebook
               style={{
                 color: "#202646",
@@ -217,7 +275,7 @@ const Home = () => {
         </div>
 
         <div className="youtube">
-          <a href="https://youtube.com/channel/UCzfOnYvMTT3roPXZ7JfZpZA">
+          <a href={links !== null ? links[0].youtube : "#0"}>
             <FiYoutube
               style={{
                 color: "#202646",
@@ -247,7 +305,7 @@ const Home = () => {
         <a
           style={{ textAlign: "left", marginRight: "15px" }}
           className="box w-50"
-          href="https://wa.me/+254719832751/"
+          href={links !== null ? links[0].whatsapp : "#0"}
         >
           <div className="card p-3">
             <p>
@@ -266,7 +324,7 @@ const Home = () => {
             <p style={{ fontSize: "13px" }}>Brian Ongiri</p>
           </div>
         </a>
-        <a className=" w-50" href="https://t.me/+v8SGq97FkEk4YzRk/">
+        <a className=" w-50" href={links !== null ? links[0].telegram : "#0"}>
           <div className="card box p-3">
             <p>
               <b>Chatroom</b>
@@ -357,18 +415,20 @@ const Home = () => {
         >
           Trade 24/7, Trade with Quick Fire Trader Today!
         </p>
-        
+
         <div style={{ borderRadius: "7px" }} className="textonimg mt-3">
-        <img
-          
-          className="w-100"
-          src="https://www.uktech.news/wp-content/uploads/2022/02/shutterstock_1487940437.jpg"
-          alt=""
-        />
+          <img
+            className="w-100"
+            src="https://www.uktech.news/wp-content/uploads/2022/02/shutterstock_1487940437.jpg"
+            alt=""
+          />
           <div className="bottom-left">
-            <p><a href="https://track.deriv.com/_aUlF11YKsMhBMfcXPt5VjGNd7ZgqdRLk/1/" style={{color:"white"}}>Join Now</a></p>
+            <p>
+              <a href="#0" onClick={() => share()} style={{ color: "white" }}>
+                Join Now
+              </a>
+            </p>
           </div>
-          
         </div>
         <p className="text-center mb-1 mt-3">
           <b>Support</b>
@@ -382,7 +442,7 @@ const Home = () => {
           style={{ textAlign: "center", marginTop: ".5rem" }}
           className="connect"
         >
-          <a href="https://t.me/+v8SGq97FkEk4YzRk">
+          <a href={links !== null ? links[0].telegram : "#0"}>
             <FiSend
               style={{
                 color: "#202646",
@@ -394,7 +454,7 @@ const Home = () => {
               }}
             />
           </a>
-          <a href="mailto: quickfiretraders@gmail.com">
+          <a href={links !== null ? `mailto: ${links[0].email}` : "#0"}>
             <FaGoogle
               style={{
                 color: "#202646",

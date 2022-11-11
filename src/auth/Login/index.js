@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { FiSend } from "react-icons/fi";
 import { FaGoogle, FaWhatsapp } from "react-icons/fa";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import fire from "../../config/fire";
 import { EmailShareButton, TelegramShareButton, WhatsappShareButton } from "react-share";
 
 
@@ -13,12 +14,44 @@ const Login = ({ loginUser }) => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const history = useHistory();
   const [loading, setLoading] = useState(false);
+  const store = fire.firestore();
+  const [links, setLinks] = useState([
+    {
+      email: "quickfiretrader@gmail.com",
+      facebook: "https://www.facebook.com/profile.php?id=100087641640766",
+      telegram: "https://t.me/+v8SGq97FkEk4YzRk",
+      whatsapp: "https://wa.me/+254768125852/",
+      youtube: "https://youtube.com/channel/UCzfOnYvMTT3roPXZ7JfZpZA",
+    },
+  ]);
 
   useEffect(() => {
     if (isLoggedIn) {
       history.push("/home");
     }
   });
+
+  useEffect(()=>{
+    const fetchLinks = async () => {
+      try {
+        await store
+          .collection("links")
+          .doc("izyQeo1ByOWQqz1kmpb8")
+          .get()
+          .then((snapshot) => {
+            if (snapshot) {
+              var data = []
+              data.push(snapshot.data())
+              setLinks(data)
+            }
+          });
+      } catch (err) {
+        toast.error(err);
+      }
+    };
+    fetchLinks();
+
+  },[])
 
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
@@ -111,7 +144,7 @@ const Login = ({ loginUser }) => {
                   className="connect"
                 >
                   <p>Failed to Login? Contact us now...</p>
-                  <a href="https://t.me/+v8SGq97FkEk4YzRk">
+                  <a href={links !== null ?  links[0].telegram : "#0"}>
                     <FiSend
                       style={{
                         color: "#202646",
@@ -123,7 +156,7 @@ const Login = ({ loginUser }) => {
                       }}
                     />
                   </a>
-                  <a href="mailto: quickfiretraders@gmail.com">
+                  <a href={links !== null ?  `mailto: ${links[0].email}` : "#0"}>
                     <FaGoogle
                       style={{
                         color: "#202646",
@@ -135,7 +168,7 @@ const Login = ({ loginUser }) => {
                       }}
                     />
                   </a>
-                  <a href="https://wa.me/+254719832751/">
+                  <a href={links !== null ?  links[0].whatsapp : "#0"}>
                     <FaWhatsapp
                       style={{
                         color: "#202646",

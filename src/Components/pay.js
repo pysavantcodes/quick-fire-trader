@@ -1,4 +1,6 @@
 import { InterswitchPay } from "react-interswitch";
+import { getAuth, deleteUser } from "firebase/auth";
+
 
 export default function Pay() {
   const props = {
@@ -18,6 +20,9 @@ export default function Pay() {
       console.log('response: ', response)
     }
   }
+
+  const auth = getAuth();
+  console.log(auth.tenantId);
   
 
   
@@ -25,6 +30,7 @@ export default function Pay() {
   return (
     <div className="container">
       <InterswitchPay {...props} />
+      
     </div>
   );
 }

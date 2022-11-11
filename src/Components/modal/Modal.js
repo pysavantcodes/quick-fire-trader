@@ -45,6 +45,15 @@ const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
   const [currency, setCurrency] = useState("KES");
   const [userObj, setUserObj] = useState({});
   const [daysSpent, setDaysSpent] = useState(0)
+  const [links, setLinks] = useState([
+    {
+      email: "quickfiretrader@gmail.com",
+      facebook: "https://www.facebook.com/profile.php?id=100087641640766",
+      telegram: "https://t.me/+v8SGq97FkEk4YzRk",
+      whatsapp: "https://wa.me/+254768125852/",
+      youtube: "https://youtube.com/channel/UCzfOnYvMTT3roPXZ7JfZpZA",
+    },
+  ]);
 
   /**Currencies */
   // const currencies = ["KES","CAD","XAF","CLP","COP","EGP","EUR","GHS","GNF","GBP","MWK","MAD","NGN","RWF","SLL","STD","ZAR","TZS","UGX","USD","XOF","ZMW"]
@@ -85,6 +94,24 @@ const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
   
     setDocRef(users)
     
+    const fetchLinks = async () => {
+      try {
+        await store
+          .collection("links")
+          .doc("izyQeo1ByOWQqz1kmpb8")
+          .get()
+          .then((snapshot) => {
+            if (snapshot) {
+              var data = []
+              data.push(snapshot.data())
+              setLinks(data)
+            }
+          });
+      } catch (err) {
+        toast.error(err);
+      }
+    };
+    fetchLinks();
   
 
   if(userObj.plan !== "free"){
@@ -235,7 +262,7 @@ const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
         <div className="connect">
           <p>Connect to us Via</p>
           <div className="mb-1">
-            <a href="https://www.facebook.com/profile.php?id=100087641640766">
+            <a href={links !== null ?  links[0].facebook : "#0"}>
               <FiFacebook
                 id="ic"
                 style={{
@@ -248,7 +275,7 @@ const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
                 }}
               />
             </a>
-            <a href="https://t.me/+v8SGq97FkEk4YzRk">
+            <a href={links !== null ?  links[0].telegram : "#0"}>
               <FiSend
                 id="ic"
                 style={{
@@ -261,7 +288,7 @@ const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
                 }}
               />
             </a>
-            <a href="https://youtube.com/channel/UCzfOnYvMTT3roPXZ7JfZpZA">
+            <a href={links !== null ?  links[0].youtube : "#0"}>
               <FiYoutube
                 id="ic"
                 style={{
@@ -274,7 +301,7 @@ const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
                 }}
               />
             </a>
-            <a href="mailto: quickfiretraders@gmail.com">
+            <a href={links !== null ?  `mailto: ${links[0].email}` : "#0"}>
               <FaGoogle
                 id="ic"
                 style={{
@@ -287,7 +314,7 @@ const Modal = ({ show, name, email, wallet, fetchInfo, plan }) => {
                 }}
               />
             </a>
-            <a href="https://wa.me/+254719832751/">
+            <a href={links !== null ?  links[0].whatsapp : "#0"}>
               <FaWhatsapp
                 id="ic"
                 style={{
